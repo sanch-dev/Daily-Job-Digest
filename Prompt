@@ -1,7 +1,6 @@
-
 DAILY DATA ENGINEER JOB DIGEST — v5 (target-companies only, batched f_C, cached IDs, ATS JSON)
 
-OBJECTIVE: Produce an extensive daily report of Data Engineer openings at Sanchit's 43 target companies (via LinkedIn) plus 15 company career sites, ranked and emailed. This is a TARGETED report (no generic keyword discovery) — coverage of the named companies is the point. Never fabricate postings: every job in the output must be a real posting with a real canonical URL actually retrieved. If a source yields nothing, say so.
+OBJECTIVE: Produce an extensive daily report of Data Engineer openings at your 43 target companies (via LinkedIn) plus 15 company career sites, ranked and emailed. This is a TARGETED report (no generic keyword discovery) — coverage of the named companies is the point. Never fabricate postings: every job in the output must be a real posting with a real canonical URL actually retrieved. If a source yields nothing, say so.
 
 BROWSER: Use the connected Claude Chrome extension on the Personal profile (LinkedIn logged in there). Verify LinkedIn is logged in first; if it shows a login wall, note it and continue with career sites.
 
@@ -11,7 +10,7 @@ BROWSER TIMEOUT HANDLING (learned 2026-07-08 — this cut a run from very slow t
 - Batch navigate→wait→read sequences into one browser_batch call where possible instead of separate turns, to cut per-call round-trip overhead.
 
 TIMESTAMP LOGGING (added 2026-07-08 — for diagnosing run duration): Get a real timestamp via Bash (`date "+%Y-%m-%d %H:%M:%S"`) — do NOT estimate or guess elapsed time from memory. Log every entry below, one per line, to:
-  C:\Users\sanchit.d\.claude\scheduled-tasks\daily-data-engineer-job-digest\run-logs\{YYYY-MM-DD}.log
+  C:\Users\[YOUR_USERNAME]\.claude\scheduled-tasks\daily-data-engineer-job-digest\run-logs\{YYYY-MM-DD}.log
 (create the run-logs folder if it doesn't exist). Format each line: `[HH:MM:SS] EVENT — detail`.
 - RUN_START and RUN_END (compute and log TOTAL_DURATION at the end from these two).
 - START/END for each major phase: Step 0 (company-ID cache), each Step 1 batch (1-5), each Step 2 site, filtering/verification, email composition, email sending.
@@ -21,9 +20,9 @@ TIMESTAMP LOGGING (added 2026-07-08 — for diagnosing run duration): Get a real
 At RUN_END, compute total duration and a per-phase breakdown (sum of timestamps between each phase's START/END), and include this breakdown in the FINAL summary (see OUTPUT section — timing metrics ARE wanted now, this reverses the earlier "no timing metrics" instruction).
 
 CANDIDATE PROFILE:
-Name: Sanchit Dass | Email: sdass979665@gmail.com
-Experience: ~5 years Data Engineer | Current: ₹30 LPA
-Location: Pune, India | Willing to relocate: Bangalore, Hyderabad | India-based only
+Name: [YOUR NAME] | Email: [your-email@example.com]
+Experience: ~5 years Data Engineer | Current CTC: [your current CTC]
+Location: [Your City], India | Willing to relocate: Bangalore, Hyderabad | India-based only
 Stack: Azure, Databricks, Spark/PySpark, Kafka, Airflow, SQL, Delta Lake, Fabric
 Domain: FinTech & Wealth Management
 
@@ -31,7 +30,7 @@ Domain: FinTech & Wealth Management
 STEP 0: LOAD / BUILD THE COMPANY-ID MAP (one-time, then cached)
 
 The batched search below needs each company's numeric LinkedIn ID(s). Maintain a cache file:
-  C:\Users\sanchit.d\.claude\scheduled-tasks\daily-data-engineer-job-digest\company-ids.json
+  C:\Users\[YOUR_USERNAME]\.claude\scheduled-tasks\daily-data-engineer-job-digest\company-ids.json
 Format: { "Razorpay": "3788927,13616753,2770855", "Google": "...", ... }
 
 On each run:
@@ -136,7 +135,7 @@ JOB CARD: Company (bold) | Title | Location/Mode | Posted X ago; badges 🟢🟡
 ================================================================================
 EMAIL SENDING (AgentMail)
 
-Send via the AgentMail tools from inbox "sanchit-job-digest@agentmail.to" (inboxId = that address) to sdass979665@gmail.com. Send BOTH:
+Send via the AgentMail tools from inbox "[your-job-digest-inbox]@agentmail.to" (inboxId = that address) to [your-email@example.com]. Send BOTH:
 - Email 1 — Subject "LinkedIn Job Digest — [YYYY-MM-DD]" — postings from Step 1 (watchlist via LinkedIn).
 - Email 2 — Subject "Company Career Sites Job Digest — [YYYY-MM-DD]" — postings from Step 2 (career sites).
 Each: full HTML body + plain-text fallback. Confirm message id per send; on failure retry once, then report it.
